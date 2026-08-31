@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AyamKu - Penjualan Ayam Goreng</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f7f7;
+            color: #333;
+        }
+
+        /* NAVBAR */
+        header {
+            background: #ff6b00;
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 420px;
+            padding: 70px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #fff1e6, #ffe0c2);
+        }
+
+        .hero-text {
+            max-width: 550px;
+        }
+
+        .hero-text h2 {
+            font-size: 48px;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .hero-text span {
+            color: #ff6b00;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .hero button {
+            background: #ff6b00;
+            border: none;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .hero-food {
+            font-size: 160px;
+        }
+
+        /* MENU */
+        .menu {
+            padding: 60px 8%;
+        }
+
+        .menu h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 35px;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+        }
+
+        .food-image {
+            height: 150px;
+            background: #fff0e5;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 85px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #777;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            color: #ff6b00;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card button {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 9px;
+            background: #ff6b00;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .card button:hover {
+            background: #e85d00;
+        }
+
+        /* KERANJANG */
+        .cart {
+            padding: 50px 8%;
+            background: #fff;
+        }
+
+        .cart-box {
+            max-width: 700px;
+            margin: auto;
+            background: #f8f8f8;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .cart-box h2 {
+            margin-bottom: 20px;
+        }
+
+        #cartItems {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .quantity button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 21px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .checkout {
+            width: 100%;
+            margin-top: 20px;
+            padding: 13px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 700px) {
+            header {
+                padding: 15px 5%;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                text-align: center;
+                padding: 50px 5%;
+            }
+
+            .hero-text h2 {
+                font-size: 36px;
+            }
+
+            .hero-food {
+                display: none;
+            }
+
+            .menu,
+            .cart {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <h1>🍗 AyamKu</h1>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#keranjang">Keranjang</a>
+        </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+
+        <div class="hero-text">
+            <h2>
+                Ayam Goreng
+                <span>Lezat & Crispy</span>
+            </h2>
+
+            <p>
+                Nikmati ayam goreng renyah dengan bumbu pilihan
+                dan rasa yang bikin ketagihan.
+            </p>
+
+            <button onclick="document.getElementById('menu').scrollIntoView()">
+                Lihat Menu
+            </button>
+        </div>
+
+        <div class="hero-food">
+            🍗
+        </div>
+
+    </section>
+
+
+    <!-- MENU -->
+    <section class="menu" id="menu">
+
+        <h2>🍗 Menu Favorit</h2>
+
+        <div class="menu-container">
+
+            <div class="card">
+                <div class="food-image">🍗</div>
+
+                <h3>Ayam Original</h3>
+
+                <p>Ayam goreng dengan bumbu khas.</p>
+
+                <div class="price">Rp15.000</div>
+
+                <button onclick="addToCart('Ayam Original', 15000)">
+                    + Tambah
+                </button>
+            </div>
+
+
+            <div class="card">
+                <div class="food-image">🍗</div>
+
+                <h3>Ayam Crispy</h3>
+
+                <p>Ayam crispy dengan tekstur renyah.</p>
+
+                <div class="price">Rp17.000</div>
+
+                <button onclick="addToCart('Ayam Crispy', 17000)">
+                    + Tambah
+                </button>
+            </div>
+
+
+            <div class="card">
+                <div class="food-image">🌶️🍗</div>
+
+                <h3>Ayam Geprek</h3>
+
+                <p>Ayam crispy dengan sambal pedas.</p>
+
+                <div class="price">Rp18.000</div>
+
+                <button onclick="addToCart('Ayam Geprek', 18000)">
+                    + Tambah
+                </button>
+            </div>
+
+
+            <div class="card">
+                <div class="food-image">🍗🍚</div>
+
+                <h3>Paket Ayam + Nasi</h3>
+
+                <p>Ayam goreng lengkap dengan nasi.</p>
+
+                <div class="price">Rp20.000</div>
+
+                <button onclick="addToCart('Paket Ayam + Nasi', 20000)">
+                    + Tambah
+                </button>
+            </div>
+
+
+            <div class="card">
+                <div class="food-image">🍗🍚🥤</div>
+
+                <h3>Paket Komplit</h3>
+
+                <p>Ayam, nasi, sambal dan minuman.</p>
+
+                <div class="price">Rp25.000</div>
+
+                <button onclick="addToCart('Paket Komplit', 25000)">
+                    + Tambah
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- KERANJANG -->
+    <section class="cart" id="keranjang">
+
+        <div class="cart-box">
+
+            <h2>🛒 Keranjang Pesanan</h2>
+
+            <div id="cartItems">
+                Belum ada pesanan.
+            </div>
+
+            <div class="total">
+                <span>Total</span>
+                <span id="total">Rp0</span>
+            </div>
+
+            <button class="checkout" onclick="checkout()">
+                Pesan Sekarang
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 AyamKu | Aplikasi Penjualan Ayam Goreng</p>
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        let cart = [];
+
+        function addToCart(name, price) {
+
+            let item = cart.find(item => item.name === name);
+
+            if (item) {
+                item.quantity++;
+            } else {
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+
+            updateCart();
+
+            document.getElementById("keranjang")
+                .scrollIntoView({ behavior: "smooth" });
+        }
+
+
+        function updateCart() {
+
+            const cartItems = document.getElementById("cartItems");
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = "Belum ada pesanan.";
+                document.getElementById("total").innerText = "Rp0";
+                return;
+            }
+
+            cartItems.innerHTML = "";
+
+            let total = 0;
+
+            cart.forEach((item, index) => {
+
+                let subtotal = item.price * item.quantity;
+
+                total += subtotal;
+
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+
+                        <div>
+                            <strong>${item.name}</strong>
+                            <br>
+                            Rp${item.price.toLocaleString("id-ID")}
+                        </div>
+
+                        <div class="quantity">
+
+                            <button onclick="decrease(${index})">
+                                −
+                            </button>
+
+                            ${item.quantity}
+
+                            <button onclick="increase(${index})">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+            });
+
+            document.getElementById("total").innerText =
+                "Rp" + total.toLocaleString("id-ID");
+        }
+
+
+        function increase(index) {
+            cart[index].quantity++;
+            updateCart();
+        }
+
+
+        function decrease(index) {
+
+            cart[index].quantity--;
+
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            updateCart();
+        }
+
+
+        function checkout() {
+
+            if (cart.length === 0) {
+                alert("Keranjang masih kosong!");
+                return;
+            }
+
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+            });
+
+            alert(
+                "Pesanan berhasil dibuat! 🍗\n\n" +
+                "Total pembayaran: Rp" +
+                total.toLocaleString("id-ID") +
+                "\n\nTerima kasih sudah membeli di AyamKu!"
+            );
+
+            cart = [];
+            updateCart();
+        }
+
+    </script>
+
+</body>
+</html>
